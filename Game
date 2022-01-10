@@ -1,0 +1,149 @@
+
+
+#install.packages("raster")
+library(stringr)
+library(tidyverse)
+library(raster)
+
+academic_career_game <- function () 
+  {
+
+  #preface
+  cat ("This is not a 'Bulls and Cows' game, but your academic career. Try to graduate from NTU!")
+  name <- readline ("What's your name ?")
+  
+  ##opening GRAPHIC
+  png <- (url = "https://user-images.githubusercontent.com/95284979/148658081-c39cfb34-219a-4582-9cf9-b66f9d2a0009.png")
+  sorted_r <- png %>% 
+    raster () %>%
+    as.data.frame (xy = TRUE) %>%
+    filter (.[,3] == 0)
+  plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Welcome to NTU", font = 2, cex = 3), xlab = list (paste ("This is happy", name, "walking in the campus."), font = 3, cex = 2), ylab = "")
+  
+  ##producing 4 digits answer randomly
+  digits <- 4
+  answer <- as.numeric (sample (x = c (1:9), size = digits, replace = FALSE))
+  
+  #guessing game
+  for (k in c (1:9)) 
+    {
+
+    #sentences asking for entering number
+    if (k == 1){cat ("Hello, ", name,". You have 7 attemps to guess correct number. Please enter four non-repeating-digits number excluding 0! (Attempt #1)", sep = "")}
+    if (k == 2){cat ("Please try again! Enter 4 digits number! (Attemp #2)", sep = "")}
+    if (k == 3){cat ("Please try again! Enter 4 digits number! (Attemp #3)", sep = "")}
+    if (k == 4){cat ("Please try again! Enter 4 digits number! (Attemp #4)", sep = "")}
+    if (k == 5){cat ("Please try again! Enter 4 digits number! (Attemp #5)", sep = "")}
+    if (k == 6){cat ("Last 3 attemps! Enter 4 digits number! (Attemp #6)", sep = "")}
+    if (k == 7){cat ("Last 2 attemps! Enter 4 digits number! (Attemp #7)", sep = "")}
+    if (k == 8){cat ("Last 1 attemp! Enter 4 digits number to save yourself! (Attemp #8)", sep = "")}
+    if (k == 9){return (cat ("No attemp left! Try to get the correct answer and graduate from NTU next time.", sep = ""))}
+    
+    #detect format of response number and compare response with answer
+    response <- as.numeric (unlist (str_split (readline (), pattern = "")))
+    if (length (response) != digits | any (duplicated (response)) | all (response == 0))
+      {return (cat ("Game over. You are fired by NTU. Please enter four non-repeating-digits number excluding 0."))}
+    A <- vector (mode = "numeric", length = digits)
+    B <- vector (mode = "numeric", length = digits)
+    for (i in c (1 : digits)){
+      if (answer [i] == response [i])
+        {A [i] <- 1} 
+      else 
+      {if (length (which (answer == response[i]) == 1))
+        {B [i] <- 1}}}
+    A_count <- as.numeric (length (A [A == 1]))
+    B_count <- as.numeric (length (B [B == 1]))
+    com_AB <- paste (A_count, "A", B_count, "B", sep = "")
+    
+    #winning output
+    if (com_AB == "4A0B"){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148702316-3e3a13fe-1ead-4ed9-9189-31eb728f673b.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("You win!", font = 2, cex = 3), xlab = list (paste ("Happy graduation to ", name, " !!", sep = ""), font = 3, cex = 2), ylab = "")
+      return (paste ("You get ", com_AB, " and win the game. Congratulation!!", sep = ""))}
+
+    #error output
+     #first Attempt error (rain)
+    if (k == 1){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148697066-843793dc-b4d9-4b0d-9e8d-19c8382bf7c4.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Attempt #1: error.", font = 2, cex = 3), xlab = list (paste ("It is rainy, but", name, "doesn't bring an umbrella."), font = 3, cex = 2), ylab = "")}
+    
+     #second Attempt error (phone)
+    if (k == 2){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148699617-ee3fa145-325a-4d74-b412-f09f5d3d05ea.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Attempt #2: error.", font = 2, cex = 3),xlab = list (paste (name, "is rejected by his/her crush."), font = 3, cex = 2), ylab = "")}
+    
+     #third Attempt error (bike)
+    if (k == 3){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148697054-abb6447e-47c4-4bd4-be9c-637af82f151a.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Attempt #3: error.", font = 2, cex = 3), xlab = list (paste (name, "'s bike is towed by Shui-Yuan A-Bo.", sep = ""), font = 3, cex = 2), ylab = "")}
+    
+     #forth Attempt error (failure)
+    if (k == 4){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148692457-3ecda55a-c623-4b23-8bb2-6cf7810c8afc.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, main = list ("Attempt #4: error.", font = 2, cex = 3),  axes = FALSE, xlab = list (paste ("All of ", name, "'s experiments are failed.", sep = ""), font = 3, cex = 2), ylab = "")}
+    
+     #fifth Attempt error (drink)
+    if (k == 5){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148697061-ca966f53-a844-460b-8ee8-59d0a0d67ae4.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list("Attempt #5: error.", font = 2, cex = 3), xlab = list (paste (name, " feels very sad and drinks a lot.", sep = ""), font = 3, cex = 2), ylab = "")}
+    
+     #sixth Attempt error (r fail)
+    if (k == 6){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148657084-ed08f895-3d64-4a31-b58c-158b4b0b9d66.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Attempt #6: error.", font = 2, cex = 3), xlab = list (paste (name, " fails the R course.", sep = ""), font = 3, cex = 2), ylab = "")}
+    
+     #seventh Attempt error (cold)
+    if (k == 7){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148699117-fd65bcc3-4675-4223-94b0-89e5e438899e.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Attempt #7: error.", font = 2, cex = 3),xlab = list (paste (name, " stands on the top floor and calls the advisor.", sep = ""), font = 3, cex = 2), ylab = "")}
+    
+     #eight Attempt error (heaven)
+    if (k == 8){
+      png <- (url = "https://user-images.githubusercontent.com/95284979/148697065-9c8810e3-4bd6-49f0-81e8-ce0d6d1a8649.png")
+      sorted_r <- png %>% 
+        raster () %>%
+        as.data.frame (xy = TRUE) %>%
+        filter (.[,3] == 0)
+      plot (sorted_r$y ~ sorted_r$x, pch = 16, main = list ("Game over, every thing is over.", font = 2, cex = 3), axes = FALSE, xlab = list (paste ("Now, this is happy", name, "walking in heaven."), font = 3, cex = 2), ylab = "")}
+     
+     #print "XAXB"
+    print (com_AB)
+    }
+  }
+
+
+
+#here to play/test
+academic_career_game ()
