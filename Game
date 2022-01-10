@@ -1,5 +1,3 @@
-
-
 #install.packages("raster")
 library(stringr)
 library(tidyverse)
@@ -18,7 +16,7 @@ academic_career_game <- function ()
     raster () %>%
     as.data.frame (xy = TRUE) %>%
     filter (.[,3] == 0)
-  plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Welcome to NTU", font = 2, cex = 3), xlab = list (paste ("This is happy", name, "walking in the campus."), font = 3, cex = 2), ylab = "")
+  plot (sorted_r$y ~ sorted_r$x, pch = 16, axes = FALSE, main = list ("Welcome to NTU", font = 2, cex = 3), xlab = list (paste ("This is happy", name, "walking on the campus."), font = 3, cex = 2), ylab = "")
   
   ##producing 4 digits answer randomly
   digits <- 4
@@ -147,3 +145,5 @@ academic_career_game <- function ()
 
 #here to play/test
 academic_career_game ()
+
+
